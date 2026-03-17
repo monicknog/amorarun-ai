@@ -10,6 +10,10 @@ await app.register(cors, {
   methods: ["GET", "POST", "OPTIONS"]
 });
 
+app.get("/health", async () => {
+  return { ok: true };
+});
+
 await app.register(checkinRoutes);
 
 const port = Number(process.env.PORT ?? 3333);

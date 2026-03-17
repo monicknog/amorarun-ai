@@ -240,6 +240,25 @@ Configuracoes sugeridas:
 
 Depois de publicar o backend, atualize `NEXT_PUBLIC_API_URL` no projeto da Vercel e redeploy do frontend.
 
+### 10.4 Deploy backend na Render (recomendado para este projeto)
+
+Este repositorio ja inclui o blueprint [render.yaml](render.yaml), entao a forma mais rapida e:
+
+1. Acesse Render Blueprint: https://dashboard.render.com/blueprint/new
+2. Conecte o repo `monicknog/amorarun-ai`.
+3. A Render vai detectar [render.yaml](render.yaml) e criar o servico `amora-run-backend`.
+4. Em Environment, preencha `GEMINI_API_KEY`.
+5. Clique em Apply.
+
+Quando finalizar, valide:
+
+- Health check: `https://SEU_BACKEND.onrender.com/health`
+- API: POST `https://SEU_BACKEND.onrender.com/api/checkin`
+
+Depois, na Vercel, ajuste:
+
+- `NEXT_PUBLIC_API_URL=https://SEU_BACKEND.onrender.com`
+
 Saida:
 
 ```json
