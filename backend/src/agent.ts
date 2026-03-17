@@ -17,17 +17,41 @@ function sanitizeJsonText(value: string): string {
 }
 
 function buildFallbackResponse(input: CheckinInput): CheckinResponse {
+  const byEmotion: Record<
+    CheckinInput["estado_emocional"],
+    CheckinResponse["adapted_workout"]
+  > = {
+    animada: {
+      status: "mantido",
+      workout: `${input.treino_planejado_hoje} com inicio progressivo e final soltando.` ,
+      rationale:
+        "Como voce esta animada, mantemos o plano com controle de esforco para preservar consistencia."
+    },
+    focada: {
+      status: "mantido",
+      workout: `${input.treino_planejado_hoje} com ritmo confortavel e tecnica atenta.` ,
+      rationale:
+        "Seu foco permite executar o treino planejado com qualidade e boa percepcao de esforco."
+    },
+    ansiosa: {
+      status: "reduzido",
+      workout: "Reduza entre 15% e 20% do volume e mantenha respiracao ritmada durante o treino.",
+      rationale:
+        "Em dia de ansiedade, reduzir um pouco a carga ajuda a manter o treino seguro e produtivo."
+    },
+    cansada: {
+      status: "reduzido",
+      workout: "Reduza o volume em 30% e mantenha ritmo conversavel.",
+      rationale:
+        "Com sinais de cansaco, a reducao de carga protege recuperacao e evita acumulo de fadiga."
+    }
+  };
+
+  const adapted = byEmotion[input.estado_emocional];
+
   return {
     original_plan: input.treino_planejado_hoje,
-    adapted_workout: {
-      status: input.estado_emocional === "cansada" ? "reduzido" : "mantido",
-      workout:
-        input.estado_emocional === "cansada"
-          ? "Reduza o volume em 30% e mantenha ritmo conversavel."
-          : input.treino_planejado_hoje,
-      rationale:
-        "Fallback acionado para manter o fluxo da interface sem interromper o check-in."
-    },
+    adapted_workout: adapted,
     soft_skill_mentor: {
       focus: "Resiliencia com autoescuta",
       guidance:
