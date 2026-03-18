@@ -76,17 +76,24 @@ export function CheckinForm({ onResult }: CheckinFormProps): JSX.Element {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-4 rounded-2xl border border-terra/20 bg-creme/90 p-6 shadow-xl shadow-terra/10">
-      <h2 className="text-2xl font-semibold text-folha">Check-in Diario da Atleta</h2>
+      <h2 className="text-2xl font-semibold text-folha">Mentoria Pre-Treino da Atleta</h2>
+      <p className="-mt-1 text-sm text-zinc-700">
+        Preencha antes de correr para apoiar o treino que deve ser entregue hoje.
+      </p>
 
       <label className="grid gap-1 text-sm">
-        <span>Nome</span>
-        <input {...register("nome")} className="rounded-lg border border-terra/30 bg-white px-3 py-2 outline-none ring-coral transition focus:ring-2" />
+        <span>Nome da atleta</span>
+        <input
+          {...register("nome")}
+          placeholder="Ex.: Monica"
+          className="rounded-lg border border-terra/30 bg-white px-3 py-2 outline-none ring-coral transition focus:ring-2"
+        />
         {errors.nome && <span className="text-xs text-red-700">{errors.nome.message}</span>}
       </label>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-1 text-sm">
-          <span>Objetivo</span>
+          <span>Distancia alvo da prova</span>
           <select {...register("objetivo")} className="rounded-lg border border-terra/30 bg-white px-3 py-2">
             <option value="5k">5k</option>
             <option value="10k">10k</option>
@@ -96,7 +103,7 @@ export function CheckinForm({ onResult }: CheckinFormProps): JSX.Element {
         </label>
 
         <label className="grid gap-1 text-sm">
-          <span>Data da Prova</span>
+          <span>Data da prova principal</span>
           <input type="date" {...register("data_prova")} className="rounded-lg border border-terra/30 bg-white px-3 py-2" />
           {errors.data_prova && (
             <span className="text-xs text-red-700">{errors.data_prova.message}</span>
@@ -105,23 +112,31 @@ export function CheckinForm({ onResult }: CheckinFormProps): JSX.Element {
       </div>
 
       <label className="grid gap-1 text-sm">
-        <span>Local da Prova</span>
-        <input {...register("local_prova")} className="rounded-lg border border-terra/30 bg-white px-3 py-2" />
+        <span>Local da prova</span>
+        <input
+          {...register("local_prova")}
+          placeholder="Ex.: Sao Paulo - SP"
+          className="rounded-lg border border-terra/30 bg-white px-3 py-2"
+        />
         {errors.local_prova && (
           <span className="text-xs text-red-700">{errors.local_prova.message}</span>
         )}
       </label>
 
       <label className="grid gap-1 text-sm">
-        <span>Treino Planejado Hoje</span>
-        <input {...register("treino_planejado_hoje")} className="rounded-lg border border-terra/30 bg-white px-3 py-2" />
+        <span>Treino que deve ser entregue hoje</span>
+        <input
+          {...register("treino_planejado_hoje")}
+          placeholder="Ex.: 10km com 3km em ritmo de prova"
+          className="rounded-lg border border-terra/30 bg-white px-3 py-2"
+        />
         {errors.treino_planejado_hoje && (
           <span className="text-xs text-red-700">{errors.treino_planejado_hoje.message}</span>
         )}
       </label>
 
       <label className="grid gap-1 text-sm">
-        <span>Estado Emocional</span>
+        <span>Como voce chega para o treino de hoje</span>
         <select {...register("estado_emocional")} className="rounded-lg border border-terra/30 bg-white px-3 py-2">
           <option value="animada">animada</option>
           <option value="cansada">cansada</option>
@@ -131,8 +146,13 @@ export function CheckinForm({ onResult }: CheckinFormProps): JSX.Element {
       </label>
 
       <label className="grid gap-1 text-sm">
-        <span>Relato Livre</span>
-        <textarea {...register("relato_livre")} rows={4} className="rounded-lg border border-terra/30 bg-white px-3 py-2" />
+        <span>Contexto rapido pre-treino</span>
+        <textarea
+          {...register("relato_livre")}
+          rows={4}
+          placeholder="Conte como dormiu, nivel de energia, dor muscular, clima e qualquer ponto importante para ajustar o treino."
+          className="rounded-lg border border-terra/30 bg-white px-3 py-2"
+        />
         {errors.relato_livre && (
           <span className="text-xs text-red-700">{errors.relato_livre.message}</span>
         )}
@@ -145,7 +165,7 @@ export function CheckinForm({ onResult }: CheckinFormProps): JSX.Element {
         disabled={isSubmitting}
         className="rounded-lg bg-folha px-4 py-3 text-sm font-semibold text-creme transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isSubmitting ? "Processando mentoria..." : "Gerar adaptacao com Amora"}
+        {isSubmitting ? "Gerando mentoria pre-treino..." : "Gerar mentoria para o treino de hoje"}
       </button>
     </form>
   );
