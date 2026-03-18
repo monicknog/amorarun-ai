@@ -23,10 +23,16 @@ export function buildSystemPrompt(): string {
 }
 
 export function buildUserPrompt(input: CheckinInput): string {
+  const provaDate = new Date(input.data_prova);
+  const hoje = new Date();
+  const diasAte = Math.ceil(
+    (provaDate.getTime() - hoje.getTime()) / (1000 * 60 * 60 * 24)
+  );
+
   return [
     `Nome: ${input.nome}`,
     `Objetivo: ${input.objetivo}`,
-    `Data da prova: ${input.data_prova}`,
+    `Data da prova: ${input.data_prova} (faltam ${diasAte} dias)`,
     `Local da prova: ${input.local_prova}`,
     `Treino planejado hoje: ${input.treino_planejado_hoje}`,
     `Estado emocional: ${input.estado_emocional}`,
